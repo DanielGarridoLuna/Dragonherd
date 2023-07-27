@@ -3,14 +3,13 @@ import {View, StyleSheet, TextInput} from 'react-native';
 
 
 
-const SRMain = () => {
+const SRUpdate = () => {
 
     const styles = StyleSheet.create({
         Contenedor:{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor:'crimson'
             
         },
         input: {
@@ -30,12 +29,14 @@ const SRMain = () => {
 
         
 
+        <TextInput
+        style={styles.input}
+        placeholder="Categoria"
         
-
-        
+        />
 
         </View>
       )
 }
 
-export default SRMain
+export default SRUpdate

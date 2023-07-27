@@ -3,14 +3,13 @@ import {View, StyleSheet, TextInput} from 'react-native';
 
 
 
-const SRMain = () => {
+const SRDelete = () => {
 
     const styles = StyleSheet.create({
         Contenedor:{
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor:'crimson'
             
         },
         input: {
@@ -26,16 +25,10 @@ const SRMain = () => {
     return (
         <View style={styles.Contenedor}>
 
-        
 
-        
-
-        
-
-        
 
         </View>
       )
 }
 
-export default SRMain
+export default SRDelete
