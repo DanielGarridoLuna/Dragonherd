@@ -1,7 +1,8 @@
 import React from 'react';
 import {useState} from 'react'
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
-
+import {View, StyleSheet, Text, ScrollView, Button} from 'react-native';
+import { db } from '../Server/Conexion';
+import { collection, getDocs } from "firebase/firestore";
 
 
 const SRRead = () => {
@@ -11,7 +12,8 @@ const SRRead = () => {
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
-            
+            backgroundColor:'#87cefa',
+            margin:10
         },
         input: {
           height: 40,
@@ -27,22 +29,54 @@ const SRRead = () => {
         Titulo: {
         fontWeight: 'bold',
         fontSize: 30, 
+        color:'white',
+        
+        },
+        Subtitulo:{
+          fontSize: 25,
+        },
+        Header:{
+          backgroundColor:'black',
+          width: '100%',
         }
+
       });
 
-      const [nombres]=useState(["Alejandra", "Beatriz", "Carlos", "Damian", "Erika", "Fernando", "Gael", "Homero"])
-      const [numeros]=useState([25, 30, 20, 31, 23])
+      const [elementos, setelementos]=useState([])
 
+      async function leer(){
+        const querySnapshot = await getDocs(collection(db, "Productos"));
+        const articulos=[];
+            querySnapshot.forEach((doc) => {
+            const {Producto, Precio, Existencia, Categoria}=doc.data()
+    
+            articulos.push({
+                Id:doc.id,
+                Producto,
+                Precio,
+                Existencia,
+                Categoria
+            })
+    })
+        setelementos(articulos)
+    }
      
 
     return (
       <ScrollView style={styles.Sec}>
-      <Text  style={styles.Titulo} >Leer información</Text>
+      
+      <Button title="Leer"  onPress={() =>leer()}>Leer Productos</Button>
       {
-      numeros.map(numero=>{
+      elementos.map(elemento=>{
           return(
-              <View style={styles.Contenedor}>
-              <Text style={styles.Titulo}>{numero}</Text>
+              <View style={styles.Contenedor} key={elemento.Id}>
+                <View style={styles.Header}>
+                <Text style={styles.Titulo}>{elemento.Producto}</Text>
+                </View>
+            
+              <Text style={styles.Subtitulo}>Precio:${elemento.Precio}</Text>
+              <Text style={styles.Subtitulo}>Existencia:{elemento.Existencia} piezas</Text>
+              <Text style={styles.Subtitulo}>Categoria:{elemento.Categoria}</Text>
               </View>
           );
       })
