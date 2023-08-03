@@ -1,5 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, TextInput} from 'react-native';
+import {useState} from 'react'
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 
 
 
@@ -19,32 +20,34 @@ const SRRead = () => {
           padding: 10,
           color:`#dc143c`
         },
+        Sec:{
+          textAlign: 'center', 
+          fontWeight: 'bold',
+        },
+        Titulo: {
+        fontWeight: 'bold',
+        fontSize: 30, 
+        }
       });
 
+      const [nombres]=useState(["Alejandra", "Beatriz", "Carlos", "Damian", "Erika", "Fernando", "Gael", "Homero"])
+      const [numeros]=useState([25, 30, 20, 31, 23])
+
+     
 
     return (
-        <View style={styles.Contenedor}>
-
-
-        <TextInput
-        style={styles.input}
-        placeholder="Precio"
-       
-        />
-
-        <TextInput
-        style={styles.input}
-        placeholder="Existencia"
-      
-        />
-
-        <TextInput
-        style={styles.input}
-        placeholder="Categoria"
-        
-        />
-
-        </View>
+      <ScrollView style={styles.Sec}>
+      <Text  style={styles.Titulo} >Leer información</Text>
+      {
+      numeros.map(numero=>{
+          return(
+              <View style={styles.Contenedor}>
+              <Text style={styles.Titulo}>{numero}</Text>
+              </View>
+          );
+      })
+      }
+      </ScrollView>
       )
 }
 
