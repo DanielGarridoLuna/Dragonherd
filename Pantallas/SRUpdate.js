@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState} from 'react'
-import {ScrollView, Button, View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
+import {ScrollView, Button, View, StyleSheet, Text, TouchableOpacity, TextInput, Image } from 'react-native';
 import { db } from '../Server/Conexion';
 import { collection, getDocs, doc, getDoc, updateDoc } from "firebase/firestore";
 
@@ -42,6 +42,10 @@ const SRupdate = () => {
             alignItems:'center',
 
         },
+        ima:{
+            justifyContent:'center',
+            alignItems:'center'
+        }
       });
 
 
@@ -51,7 +55,8 @@ const SRupdate = () => {
         producto:'',
         precio:'',
         existencia:'',
-        categoria:''
+        categoria:'',
+        imagen:''
       })
 
     const capturar =(atrib,valor) =>{
@@ -63,14 +68,15 @@ const SRupdate = () => {
         const querySnapshot = await getDocs(collection(db, "Productos"));
         const articulos=[];
             querySnapshot.forEach((doc) => {
-            const {Producto, Precio, Existencia, Categoria}=doc.data()
+            const {Producto, Precio, Existencia, Categoria, Imagen}=doc.data()
     
             articulos.push({
                 Id:doc.id,
                 Producto,
                 Precio,
                 Existencia,
-                Categoria
+                Categoria,
+                Imagen
             })
     })
         setelementos(articulos)
@@ -85,8 +91,9 @@ const SRupdate = () => {
           const txtprecio = docSnap.data().Precio;
           const txtexi = docSnap.data().Existencia;
           const txtcate = docSnap.data().Categoria;
+          const txtima = docSnap.data().Imagen;
     
-        setproductos({...productos,['id']:iden, ['producto']:txtproducto, ['precio']:txtprecio, ['existencia']:txtexi, ['categoria']:txtcate})
+        setproductos({...productos,['id']:iden, ['producto']:txtproducto, ['precio']:txtprecio, ['existencia']:txtexi, ['categoria']:txtcate,['imagen']:txtima})
         } else {
           alert('Codigo Invalido')
         }
@@ -102,7 +109,8 @@ const SRupdate = () => {
                 Producto:productos.producto,
                 Precio:precio,
                 Existencia:existencia,
-                Categoria:productos.categoria
+                Categoria:productos.categoria,
+                Imagen:productos.imagen
           });
           
         alert('Producto Actualizado');
@@ -141,6 +149,13 @@ const SRupdate = () => {
         onChangeText={(value)=>capturar('categoria',value)}
         />
 
+        <TextInput
+        style={styles.input}
+        placeholder="Imagen"
+        value={productos.imagen}
+        onChangeText={(value)=>capturar('imagen',value)}
+        /> 
+
         </View>
 
         <View style={styles.boton}>
@@ -157,6 +172,14 @@ const SRupdate = () => {
                 >
                 <View style={styles.Contenedor} >
                 <Text style={styles.Titulo}>{elemento.Producto}</Text>
+                <View style={styles.ima}>
+                <Image
+                  source={{
+                  uri:elemento.Imagen
+                  }}
+                  style={{width: 300, height: 300}}
+                />
+                </View>
                 <Text style={styles.Subtitulo}>Precio:${elemento.Precio}</Text>
                 <Text style={styles.Subtitulo}>Existencia:{elemento.Existencia} piezas</Text>
                 <Text style={styles.Subtitulo}>Categoria:{elemento.Categoria}</Text>

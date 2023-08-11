@@ -28,7 +28,8 @@ const SRAdd = () => {
         producto:'',
         precio:'',
         existencia:'',
-        categoria:''
+        categoria:'',
+        imagen:''
       })
 
       const capturar =(atrib,valor) =>{
@@ -51,7 +52,8 @@ const SRAdd = () => {
                 Producto:elementos.producto,
                 Precio:precio,
                 Existencia:existencia,
-                Categoria:elementos.categoria
+                Categoria:elementos.categoria,
+                Imagen:elementos.imagen
               });
               alert('Se agrego correctamente el producto')
             } catch (e) {
@@ -90,6 +92,12 @@ const SRAdd = () => {
         style={styles.input}
         placeholder="Categoria"
         onChangeText={(value)=>capturar('categoria',value)}
+        />
+
+        <TextInput
+        style={styles.input}
+        placeholder="Url de la Imagen"
+        onChangeText={(value)=>capturar('imagen',value)}
         />
 
         <Button title="Agregar" onPress={()=>agregar()}>Agregar</Button> 
